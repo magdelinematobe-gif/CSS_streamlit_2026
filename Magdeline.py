@@ -8,8 +8,11 @@ Created on Sat Jan 31 20:19:13 2026
 import streamlit as st
 import random
 import time
+import os
 
-# ⬇️ ADD THIS HERE
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def load_high_score():
     try:
         with open("highscore.txt", "r") as f:
@@ -71,7 +74,9 @@ if not st.session_state.music_playing:
 
 # Display audio player (persistent, not affected by reruns)
 if st.session_state.music_playing:
-   st.audio("background.mp3", format="audio/mp3", start_time=0)
+   #st.audio("background.mp3", format="audio/mp3", start_time=0)
+   st.audio(os.path.join(BASE_DIR, "background.mp3"), format="audio/mp3", loop=True)
+
 # ------------------ State ------------------
 if "player_x" not in st.session_state:
     st.session_state.player_x = 140
