@@ -65,13 +65,15 @@ if "music_playing" not in st.session_state:
     st.session_state.music_playing = False
 
 # Only start music when user clicks the start button
-if not st.session_state.music_playing:
-    if st.button("▶️ Start Game & Music"):
-        st.session_state.music_playing = True
+if "music_on" not in st.session_state:
+    st.session_state.music_on = False
 
-# Display audio player (persistent, not affected by reruns)
-if st.session_state.music_playing:
-   st.audio("background.mp3", format="audio/mp3", start_time=0)
+#if st.button("🎵 Start Music"):
+    #st.session_state.music_on = True
+
+if st.session_state.music_on and not st.session_state.game_over:
+    st.audio("background.mp3", format="audio/mp3", loop=True)
+
 
 # ------------------ State ------------------
 if "player_x" not in st.session_state:
@@ -190,6 +192,7 @@ if not st.session_state.game_over:  # Only show during play
 
 # ------------------ Game Over ------------------
 if st.session_state.game_over:
+    st.session_state.music_slot.empty()
 
     if st.session_state.score > st.session_state.high_score:
         st.session_state.high_score = st.session_state.score
@@ -201,15 +204,40 @@ if st.session_state.game_over:
 
     if st.button("🔄 Restart"):
         # Reset ONLY the game variables
+        st.session_state.started = True
         st.session_state.player_x = 140
         st.session_state.enemies = []
         st.session_state.score = 0
         st.session_state.speed = 4
         st.session_state.game_over = False
         st.session_state.explosion = False
+        st.session_state.music_on = False
         # High score stays intact
         st.rerun()
 
+if "started" not in st.session_state:
+    st.session_state.started = False
+
+if not st.session_state.started:
+    if st.button("▶️ Start Game"):
+       st.session_state.started = True
+       st.rerun()
+
+    st.stop()
+else:
+    pass
+
+if "music_slot" not in st.session_state:
+    st.session_state.music_slot = st.empty()
+
+if st.session_state.started and not st.session_state.game_over:
+    st.session_state.music_slot.audio(
+        "background.mp3",
+        format="audio/mp3",
+        loop=True
+    )
+else:
+    st.session_state.music_slot.empty()
 
 
 
