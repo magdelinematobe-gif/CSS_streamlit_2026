@@ -8,10 +8,7 @@ Created on Sat Jan 31 20:19:13 2026
 import streamlit as st
 import random
 import time
-import os
 
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def load_high_score():
     try:
@@ -74,8 +71,7 @@ if not st.session_state.music_playing:
 
 # Display audio player (persistent, not affected by reruns)
 if st.session_state.music_playing:
-   #st.audio("background.mp3", format="audio/mp3", start_time=0)
-   st.audio(os.path.join(BASE_DIR, "background.mp3"), format="audio/mp3", loop=True)
+   st.audio("background.mp3", format="audio/mp3", start_time=0)
 
 # ------------------ State ------------------
 if "player_x" not in st.session_state:
@@ -221,4 +217,3 @@ if st.session_state.game_over:
 time.sleep(0.05)
 if not st.session_state.game_over and not st.session_state.paused:
     st.rerun()
-
