@@ -71,7 +71,7 @@ if not st.session_state.music_playing:
 
 # Display audio player (persistent, not affected by reruns)
 if st.session_state.music_playing:
-    st.audio("background.mp3", format="audio/mp3", start_time=0)
+   st.audio("background.mp3", format="audio/mp3", start_time=0)
 # ------------------ State ------------------
 if "player_x" not in st.session_state:
     st.session_state.player_x = 140
@@ -216,3 +216,4 @@ if st.session_state.game_over:
 time.sleep(0.05)
 if not st.session_state.game_over and not st.session_state.paused:
     st.rerun()
+
